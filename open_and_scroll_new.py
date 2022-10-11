@@ -4,6 +4,9 @@
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 import time
 import binascii, codecs
 import mysql.connector
@@ -70,7 +73,22 @@ def open_and_scroll(xcode, xcgcd):
                 button_list = player_ctrl.find_element(By.TAG_NAME, 'ul')
                 smi_btn = button_list.find_element(By.ID, 'smi_btn')
                 button = smi_btn.find_element(By.TAG_NAME, 'a').click()
-                time.sleep(10)
+
+
+                ## 자막 안켜질 때를 대비
+                go = False
+                while go == False:
+                    try:
+                        WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CLASS_NAME, 'smi_word')))
+
+                        go = True
+                        print('here')
+                    except:
+                        button = smi_btn.find_element(By.TAG_NAME, 'a').click()
+                        print('nope')
+                        pass
+
+
                 viewSubtit = smi_btn.find_element(By.ID, 'viewSubtit')
                 time.sleep(3)
                 while True:
