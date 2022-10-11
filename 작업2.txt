@@ -1,0 +1,5 @@
+## live_list_time_line :  live_list 를 만듦
+  live_list  :   앱 켜면 리뉴됨.
+
+
+## 변하지 않는 

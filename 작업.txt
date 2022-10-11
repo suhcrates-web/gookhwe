@@ -1,0 +1,10 @@
+#
+live_list_time_line  ->  live_list 만듦.
+xcode 등 
+
+#
+### 수집 체커
+그걸 바탕으로 수집.  (수집 row를 처음에 만듦)
+xdesc가 개의면 열고, xdesc가 개의가 아니면 닫고.
+
+개의 and  True 면 놔두고, 개의 and False 면 키고, !개의 and True 면 끄고 False로, !개의 and False면 놔두고.
