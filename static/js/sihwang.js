@@ -1,7 +1,9 @@
 
 
 $(document).ready(function(){
-	
+	var objDiv = document.getElementById("content_box");
+    objDiv.scrollTop = objDiv.scrollHeight;
+
 	$(document).on('click', '#make_box', function(event){
 		var state = this.getAttribute("state");
 		
@@ -36,9 +38,9 @@ $(document).ready(function(){
 		
 	});
 
-	$(document).on('click', '#copy', function(){
+	$(document).on('click', '.copy', function(){
 
-		var copy0 = $('#content_box') //.text();	
+		var copy0 = $('#content_box') //.text();
 		var brRegex = /<br\s*[\/]?>/gi;
 		var textArea = document.createElement('textArea');
 		textArea.value = copy0.html().replace(brRegex, "\r\n");

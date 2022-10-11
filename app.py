@@ -25,12 +25,12 @@ def index():
     cursor = db.cursor()
     cursor.execute(
         """
-        select xcode, xsubj from gookhwe_stuffs.live_list
+        select xcode, xsubj, xname, xdesc from gookhwe_stuffs.live_list
         """
     )
     objs = []
     for temp in cursor.fetchall():
-        objs.append({'xcode':temp[0], 'xsubj':temp[1]})
+        objs.append({'xcode':temp[0], 'xsubj':temp[1], 'xname':temp[2], 'xdesc':temp[3]})
     return render_template('bot_v3.html', objs=objs)
 
 
@@ -49,11 +49,16 @@ def test(xcode0):
     objs = []
     cursor.execute(
         f"""
-        select content from gookhwe_stuffs.live_list where xcode='{xcode0}'
+        select content, xname, xsubj, xdesc from gookhwe_stuffs.live_list where xcode='{xcode0}'
         """
         # and good = 1
     )
-    a = cursor.fetchall()[0][0]
+    temp =  cursor.fetchall()[0]
+    a = temp[0]
+    xname = temp[1]
+    xsubj = temp[2]
+    xdesc = temp[3]
+    objs={'xname':xname, 'xsubj':xsubj, 'xdesc':xdesc}
     blob_scrol = codecs.decode(a, 'utf-8')
     text_list = blob_scrol.strip().split('\n')
 
@@ -110,7 +115,7 @@ if __name__ == "__main__":
         host = '0.0.0.0'
 
     elif port == '5231':
-        port = '5235'
+        port = '5236'
         host = '0.0.0.0'
     # port = 5233
     # 172.30.1.53
