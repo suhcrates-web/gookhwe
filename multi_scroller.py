@@ -1,6 +1,7 @@
 import multiprocessing
 from multiprocessing import Queue
-from open_and_scroll_new import open_and_scroll
+# from open_and_scroll_new import open_and_scroll
+from exp22 import open_and_scroll
 from database import cursor, db
 from datetime import date
 import time

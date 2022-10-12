@@ -10,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import binascii, codecs
 import mysql.connector
-from datetime import date
+from datetime import date, datetime
 from ToolBox import still_10
 from database import cursor, db
 
@@ -19,6 +19,7 @@ def open_and_scroll(xcode, xcgcd):
     open0 = False
     options = webdriver.ChromeOptions()
     driver = webdriver.Chrome('C:/stamp/chromedriver', options=options)
+
     while True:
         config = {
             'user': 'root',
@@ -54,6 +55,9 @@ def open_and_scroll(xcode, xcgcd):
                 if a == None:
                     a = b''
                 blob_scrol = codecs.decode(a, 'utf-8')
+                n0 = datetime.now()
+                blob_scrol += f"<BR>======================\n <BR> {n0.hour}시 {n0.minute}분 {n0.second}초 시작<BR> \n====================== <BR> \n "
+                first0 = False
                 text_list = blob_scrol.strip().split('\n')
 
                 url = f'https://assembly.webcast.go.kr/main/player.asp?xcode={xcode}&xcgcd={xcgcd}&'
@@ -156,6 +160,25 @@ def open_and_scroll(xcode, xcgcd):
                     # print(f'작업중 {xstat0}')
 
                     if xstat0 == 0:
+                        n0 = datetime.now()
+                        print(f"{n0.hour}시 {n0.minute}분 {n0.second}초")
+                        blob_scrol +=f"<BR>======================\n <BR> {n0.hour}시 {n0.minute}분 {n0.second}초 정회<BR> \n====================== <BR> \n "
+                        a = bin(int(binascii.hexlify(blob_scrol.encode('utf-8')), 16))[2:]
+                        config = {
+                            'user': 'root',
+                            'password': 'Seoseoseo7!',
+                            'host': 'localhost',
+                            # 'database':'shit',
+                            'port': '3306'
+                        }
+
+                        db = mysql.connector.connect(**config)
+                        cursor = db.cursor()
+
+                        cursor.execute(
+                            f"""update gookhwe_stuffs.live_list set content = b'{a}' where xcode='{xcode}' and date0= '{date.today()}' """
+                        )
+                        db.commit()
                         break  # 0으로 바꼈으면 while 깸
 
                     time.sleep(5)

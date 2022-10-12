@@ -46,7 +46,7 @@ def giveme_live_list():
             today0 = date.today()
             cursor.execute(
                 f"""
-                insert into gookhwe_stuffs.live_list values("{today0}","{today0.strftime('%Y%m%d')}_{xcode}","{xcode}","{xstat}","{xname}","{xdesc}","{xcgcd}","{xsubj}",NULL)
+                insert into gookhwe_stuffs.live_list values("{today0}","{today0.strftime('%Y%m%d')}_{xcode}","{xcode}","{xstat}","{xname}","{xdesc}","{xcgcd}","{xsubj}", NULL)
                 on duplicate key update
                 xstat = "{xstat}",
                 xname = "{xname}",
