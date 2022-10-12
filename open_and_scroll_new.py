@@ -38,7 +38,6 @@ def open_and_scroll(xcode, xcgcd):
         )
 
         xstat0 = int(cursor.fetchall()[0][0])
-
         if xstat0 == 1:
             if open0 == True:
                 pass
@@ -104,9 +103,9 @@ def open_and_scroll(xcode, xcgcd):
                                 temp_list.append(text0)
                                 blob_scrol += text0 + '\n'
                         text_list = text_list + temp_list
-                        # print(text_list)
+
                         print("===================================")
-                        print(blob_scrol)
+                        print(blob_scrol) ##
                         a = bin(int(binascii.hexlify(blob_scrol.encode('utf-8')), 16))[2:]
                         config = {
                             'user': 'root',
@@ -137,6 +136,28 @@ def open_and_scroll(xcode, xcgcd):
                         print("exception *****************************")
                         pass
 
+
+                    ####### xstate0 다시 확인하는 부분 ####
+                    config = {
+                        'user': 'root',
+                        'password': 'Seoseoseo7!',
+                        'host': 'localhost',
+                        'port': '3306'
+                    }
+                    db = mysql.connector.connect(**config)
+                    cursor = db.cursor()
+                    cursor.execute(
+                        f"""
+                                        select xstat from gookhwe_stuffs.live_list where xcode='{xcode}' and date0 = '{date.today()}'
+                                        """
+                    )
+                    xstat0 = int(cursor.fetchall()[0][0])
+
+                    # print(f'작업중 {xstat0}')
+
+                    if xstat0 == 0:
+                        break  # 0으로 바꼈으면 while 깸
+
                     time.sleep(5)
         elif xstat0 == 0:
             if open0 == True:
@@ -144,5 +165,4 @@ def open_and_scroll(xcode, xcgcd):
                 driver.quit()
             if open0 == False:
                 pass
-
         time.sleep(2)

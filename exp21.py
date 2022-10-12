@@ -27,7 +27,7 @@ while True:
     state0 = int(cursor.fetchall()[0][0])
     print(f"{state0}  {open0}")
 
-    if state0 == 0:
+    if state0 == 1:
         if open0 == True:
             pass
         elif open0 == False:
@@ -41,11 +41,37 @@ while True:
                     driver = webdriver.Chrome('C:/stamp/chromedriver', options=options)
                     driver.get(url)
                     success0 = True
+
+
                 except:
                     print('안열림')
                     time.sleep(0.5)
 
-    if state0 == 1:
+            while True:
+
+                config = {
+                    'user': 'root',
+                    'password': 'Seoseoseo7!',
+                    'host': 'localhost',
+                    'port': '3306'
+                }
+                db = mysql.connector.connect(**config)
+                cursor = db.cursor()
+                cursor.execute(
+                    """
+                    select state from gookhwe_stuffs.test where id='1'
+                    """
+                )
+                state0 = int(cursor.fetchall()[0][0])
+
+                print(f'작업중 {state0}')
+
+                if state0 == 0:
+                    break
+
+                time.sleep(1)
+
+    elif state0 == 0:
         if open0 == True:
             open0 = False
             driver.quit()
