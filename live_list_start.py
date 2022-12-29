@@ -28,10 +28,10 @@ def live_list_start():
         key0 varchar(20) primary key,
         xcode varchar(20),
         xstat varchar(1),
-        xname varchar(20),
+        xname varchar(100),
         xdesc varchar(20),
         xcgcd varchar(20),
-        xsubj varchar(50),
+        xsubj varchar(100),
         content longblob
         )
         """
