@@ -1,6 +1,12 @@
-#-*- coding: utf-8 -*-
+import websockets
+import asyncio
 
-from datetime import datetime
+async def listen():
+    url ="wss://smi.webcast.go.kr/HR"
 
-n0 = datetime.now()
-print(f"{n0.hour}시 {n0.minute}분 {n0.second}초")
+    async with websockets.connect(url) as ws:
+        msg = await ws.recv()
+        print(msg)
+
+
+asyncio.get_event_loop().run_until_complete(listen())
