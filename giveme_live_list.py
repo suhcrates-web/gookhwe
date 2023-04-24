@@ -33,6 +33,7 @@ def giveme_live_list():
         xsami = coun['xsami']   #(자막)
         xdesc = coun['xdesc']  #개의 / 생중계 없음
         xstat = coun['xstat']  # 1 : 진행중, 0 : 휴
+        xthmb = coun['xthmb']  # //thumb.webcast.go.kr/api/thumbnail/bokji : 이런식임. 마지막 단어가 smi 링크에 쓰임
 
         if xcgcd != '' and xsami == '1':
             # print(xname)

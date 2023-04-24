@@ -1,5 +1,5 @@
 import requests
 
-url = 'wss://smi.webcast.go.kr/HR'
-temp = requests.post(url)
+url = 'wss://smiai.webcast.go.kr:8091/aistt/bokji'
+temp = requests.get(url)
 print(temp.content.decode())

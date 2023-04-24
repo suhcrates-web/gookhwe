@@ -1,4 +1,4 @@
-from giveme_live_list import giveme_live_list
+from giveme_live_list_v2 import giveme_live_list
 from live_list_start import live_list_start
 import time
 

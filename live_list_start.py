@@ -32,6 +32,8 @@ def live_list_start():
         xdesc varchar(20),
         xcgcd varchar(20),
         xsubj varchar(100),
+        xthmb varchar(100),
+        wss varchar(100),
         content longblob
         )
         """
