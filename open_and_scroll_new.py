@@ -179,9 +179,9 @@ def open_and_scroll(xcode, xcgcd):
                             f"""update gookhwe_stuffs.live_list set content = b'{a}' where xcode='{xcode}' and date0= '{date.today()}' """
                         )
                         db.commit()
+                        print("stat 0. 휴면으로 전환")
                         break  # 0으로 바꼈으면 while 깸
 
-                    time.sleep(5)
         elif xstat0 == 0:
             if open0 == True:
                 open0 = False
