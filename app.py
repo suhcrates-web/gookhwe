@@ -60,13 +60,16 @@ def test(xcode0):
     xdesc = temp[3]
     objs={'xname':xname, 'xsubj':xsubj, 'xdesc':xdesc}
     blob_scrol = codecs.decode(a, 'utf-8')
-    text_list = blob_scrol.strip().split('\n')
+    # print(blob_scrol)
+    article =blob_scrol.replace('\n','<BR>')
 
-    article = ''
-    for text0 in text_list:
-        if text0[0] == '-':
-            text0 = '<br><br>'+text0
-        article += text0 + ' '
+    # article = blob_scrol.strip().split('\n')
+
+    # article = ''
+    # for text0 in text_list:
+    #     if text0[0] == '-':
+    #         text0 = '<br><br>'+text0
+    #     article += text0 + ' '
     # for article in cursor.fetchall()[::-1]:
     #     objs.append({
     #         'time0': article[0].strftime("%H:%M"),
