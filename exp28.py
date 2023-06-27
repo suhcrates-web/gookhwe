@@ -1,7 +1,7 @@
 import websockets
 import asyncio
 import json
-wss0 = 'wss://smiai.webcast.go.kr:8091/aistt/gyoyuk/hls'
+wss0 = 'wss://smiai.webcast.go.kr:8091/aistt/hwanno/hls'
 async def do(wss0):
     async with websockets.connect(wss0) as websocket:
         while True:

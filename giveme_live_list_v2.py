@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from database import cursor, db
 from datetime import date
 import re
+from ToolBox import gimme_wss
 
 def giveme_live_list():
     config = {
@@ -42,7 +43,10 @@ def giveme_live_list():
                 # print(xname)
                 # print(xsubj)
                 url = f'https://assembly.webcast.go.kr/main/player.asp?xcode={xcode}&xcgcd={xcgcd}&'
-                wss = f'wss://smiai.webcast.go.kr:8091/aistt/{name0}/hls'
+
+                wss = gimme_wss(xcode, xcgcd) # 이게 더 정확
+                # wss = f'wss://smiai.webcast.go.kr:8091/aistt/{name0}/hls'
+                
                 # print(url)
                 # temp = requests.get(url)
                 # temp = BeautifulSoup(temp.content, 'html.parser')
