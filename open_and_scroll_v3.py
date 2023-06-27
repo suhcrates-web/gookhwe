@@ -34,6 +34,7 @@ def open_and_scroll(xcode, xcgcd):
         )
 
         xstat0 = int(cursor.fetchall()[0][0])
+        print('here_outside', end='')
         if xstat0 == 1:
             if open0 == True:
                 pass
@@ -52,13 +53,18 @@ def open_and_scroll(xcode, xcgcd):
                 blob_scrol = codecs.decode(a, 'utf-8')
                 n0 = datetime.now()
                 blob_scrol += f"<BR>======================\n <BR> {n0.hour}시 {n0.minute}분 {n0.second}초 시작<BR> \n====================== <BR> \n "
-
+            print('here3',end='')
             async def connect(wss0, blob_scrol, xcode):
                 async with websockets.connect(wss0) as websocket:
                     while True:
                         message = await websocket.recv()
                         message = json.loads(message)
-                        if message['final'] == True:
+                        print('here1', end='')
+                        if message['transcripts'][0][0] == 0:
+                        # if message['final'] == True:
+                            print('here2', end='')
+                            print(f'<<<{message}>>>>', end='')
+
                             blob_scrol += ' ' + message['transcript'].replace('-','\n\n-')
                             print(message['transcript'].replace('-','\n\n-'), end=' ')
 
@@ -114,6 +120,7 @@ def open_and_scroll(xcode, xcgcd):
                                     f"""update gookhwe_stuffs.live_list set content = b'{a}' where xcode='{xcode}' and date0= '{date.today()}' """
                                 )
                                 db.commit()
+                                print('did',end=' ')
                                 break  # 0으로 바꼈으면 while 깸
                     
             asyncio.run(connect(wss0, blob_scrol, xcode ))

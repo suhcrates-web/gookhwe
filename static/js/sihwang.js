@@ -2,7 +2,7 @@
 
 $(document).ready(function(){
 	var objDiv = document.getElementById("content_box");
-    objDiv.scrollTop = objDiv.scrollHeight;
+        objDiv.scrollTop = objDiv.scrollHeight;
 
 	$(document).on('click', '#make_box', function(event){
 		var state = this.getAttribute("state");
