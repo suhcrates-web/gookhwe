@@ -1,134 +1,79 @@
-### 자동 on off 추가
+##### 이거다 이거 #######
 
-######  수집하는 부분 ########
+import requests
+import json
+import re
 import websockets
 import asyncio
-
 import time
-import binascii, codecs
-import mysql.connector
-from datetime import date, datetime
-from ToolBox import still_10
-from database import cursor, db
-import json
 
-xcode ='58'
-open0 = False
 
-while True:
-    config = {
-        'user': 'root',
-        'password': 'Seoseoseo7!',
-        'host': 'localhost',
-        # 'database':'shit',
-        'port': '3306'
-    }
 
-    db = mysql.connector.connect(**config)
-    cursor = db.cursor()
+async def do():
+    header1 = {'Accept': '*/*',
+'Accept-Encoding': 'gzip, deflate, br',
+'Accept-Language': 'ko,en-US;q=0.9,en;q=0.8,ko-KR;q=0.7,ru;q=0.6',
+'Connection': 'keep-alive',
+'Content-Length': '8',
+'Content-type': 'text/plain;charset=UTF-8',
+'Cookie': '_ga=GA1.1.384811004.1688001248; _ga_QEPEGVC0VX=GS1.1.1688016651.3.1.1688017420.0.0.0; io=GWJO9aL2mZjFOMpxAAHt',
+'Host': 'smi.webcast.go.kr',
+'Origin': 'https://assembly.webcast.go.kr',
+'Referer': 'https://assembly.webcast.go.kr/',
+'Sec-Fetch-Dest': 'empty',
+'Sec-Fetch-Mode': 'cors',
+'Sec-Fetch-Site': 'same-site',
+'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+'sec-ch-ua': '"Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114"',
+'sec-ch-ua-mobile': '?0',
+'sec-ch-ua-platform': '"Windows"'}
 
-    cursor.execute(
-        f"""
-        select xstat from gookhwe_stuffs.live_list where xcode='{xcode}' and date0 = '{date.today()}'
-        """
-    )
+    url = 'https://smi.webcast.go.kr/socket.io/?EIO=3&transport=polling'
 
-    xstat0 = int(cursor.fetchall()[0][0])
-    print('here_outside', end='')
-    if xstat0 == 1:
-        if open0 == True:
-            pass
-        elif open0 == False:
-            open0 = True
-            # 열어서 활동 시작
+    temp = requests.get(url)
+    text0 = temp.content.decode('utf-8')
+    text0 = re.search(r'\{.*\}', text0)[0]
+    text0 = json.loads(text0)
+    sid = text0['sid']
+    print(sid)
+    wss2 = 'https://smi.webcast.go.kr/socket.io/?EIO=3&transport=polling&t=Oa5hntB&sid=' + sid
+    # temp0 = requests.post(wss2)
+    # print(temp0.content)
+    header2 = {'Host': 'smi.webcast.go.kr',
+               'Connection': 'Upgrade',
+               'Pragma': 'no-cache',
+               'Cache-Control': 'no-cache',
+               'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+               'Upgrade': 'websocket',
+               'Origin': 'https://assembly.webcast.go.kr',
+               'Sec-WebSocket-Version': '13',
+               'Accept-Encoding': 'gzip, deflate, br',
+               'Accept-Language': 'ko,en-US;q=0.9,en;q=0.8,ko-KR;q=0.7,ru;q=0.6',
+               'Sec-WebSocket-Key':
+                   'f6ICdxQdSqGf0aUeR3g0+g==',
+               'Sec-WebSocket-Extensions': 'permessage-deflate; client_max_window_bits'}
+    wss0 = 'wss://smi.webcast.go.kr/socket.io/?EIO=3&transport=websocket&t=Oa5hnt&sid=' + sid
+    async with websockets.connect(wss0) as websocket:
 
-            cursor.execute(
-                f"""
-                select wss, content from gookhwe_stuffs.live_list where xcode='{xcode}' and date0 = '{date.today()}'
-                """
-            )
-            wss0, a = cursor.fetchall()[0]
-            if a == None:
-                a = b''
-            blob_scrol = codecs.decode(a, 'utf-8')
-            n0 = datetime.now()
-            blob_scrol += f"<BR>======================\n <BR> {n0.hour}시 {n0.minute}분 {n0.second}초 시작<BR> \n====================== <BR> \n "
-        print('here3', end='')
+        # while True:
+        await websocket.send("2probe")
+        message = await websocket.recv()
+        print('here')
+        print(message)
+        # message = json.loads(message)
+        time.sleep(2)
+        await websocket.send("5")     # 이렇게 주거니 받거니 해야 그다음에 오는듯
 
-        async def connect(wss0, blob_scrol, xcode):
-            async with websockets.connect(wss0) as websocket:
-                while True:
-                    message = await websocket.recv()
-                    message = json.loads(message)
-                    print(message)
-
-                    print('here1', end='')
-                    if message['final'] == True:
-                        print('here2', end='')
-                        print(f'<<<{message}>>>>', end='')
-
-                        blob_scrol += ' ' + message['transcript'].replace('-', '\n\n-')
-                        print(message['transcript'].replace('-', '\n\n-'), end=' ')
-
-                        config = {
-                            'user': 'root',
-                            'password': 'Seoseoseo7!',
-                            'host': 'localhost',
-                            # 'database':'shit',
-                            'port': '3306'
-                        }
-
-                        db = mysql.connector.connect(**config)
-                        cursor = db.cursor()
-                        a = bin(int(binascii.hexlify(blob_scrol.encode('utf-8')), 16))[2:]
-                        cursor.execute(
-                            f"""update gookhwe_stuffs.live_list set content = b'{a}' where xcode='{xcode}' and date0= '{date.today()}' """
-                        )
-                        db.commit()
-
-                        ####### xstate0 다시 확인하는 부분 ####
-                        config = {
-                            'user': 'root',
-                            'password': 'Seoseoseo7!',
-                            'host': 'localhost',
-                            'port': '3306'
-                        }
-                        db = mysql.connector.connect(**config)
-                        cursor = db.cursor()
-                        cursor.execute(
-                            f"""
-                            select xstat from gookhwe_stuffs.live_list where xcode='{xcode}' and date0 = '{date.today()}'
-                            """
-                        )
-                        xstat0 = int(cursor.fetchall()[0][0])
-
-                        if xstat0 == 0:  # 끝났으면
-                            n0 = datetime.now()
-                            print(f"{n0.hour}시 {n0.minute}분 {n0.second}초")
-                            blob_scrol += f"<BR>======================\n <BR> {n0.hour}시 {n0.minute}분 {n0.second}초 정회<BR> \n====================== <BR> \n "
-                            a = bin(int(binascii.hexlify(blob_scrol.encode('utf-8')), 16))[2:]
-                            config = {
-                                'user': 'root',
-                                'password': 'Seoseoseo7!',
-                                'host': 'localhost',
-                                # 'database':'shit',
-                                'port': '3306'
-                            }
-
-                            db = mysql.connector.connect(**config)
-                            cursor = db.cursor()
-
-                            cursor.execute(
-                                f"""update gookhwe_stuffs.live_list set content = b'{a}' where xcode='{xcode}' and date0= '{date.today()}' """
-                            )
-                            db.commit()
-                            print('did', end=' ')
-                            break  # 0으로 바꼈으면 while 깸
-
-        asyncio.run(connect(wss0, blob_scrol, xcode))
-    elif xstat0 == 0:
-        if open0 == True:
-            open0 = False
-        if open0 == False:
-            pass
-    time.sleep(2)
+        message = await websocket.recv()
+        print(message)
+        await websocket.send("2")  # 이렇게 주거니 받거니 해야 그다음에 오는듯
+        message = await websocket.recv()
+        print(message)
+        # print(message['final'])
+        # print(message['transcript'])
+        # print(message['transcripts'][0][0])
+        # print(message['transcripts'][0][-1])
+        print("================")
+        await websocket.close(1000, "Normal closure")
+asyncio.run(do())
+# asyncio.get_event_loop().run_until_complete(do())
