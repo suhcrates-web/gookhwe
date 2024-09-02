@@ -9,7 +9,7 @@ from datetime import date
 def giveme_live_list():
     config = {
         'user': 'root',
-        'password': 'Seoseoseo7!',
+        'password': 'donga123123!',
         'host': 'localhost',
         # 'database':'shit',
         'port': '3306'

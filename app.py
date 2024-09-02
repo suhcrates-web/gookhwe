@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect, jsonify
 # from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from database import cursor, db
 import binascii, codecs
 import time
@@ -11,11 +11,17 @@ app = Flask(__name__)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db' ##
 # db = SQLAlchemy(app)
-@app.route('/donga/gookhwe/', methods=['get'])
-def index():
+
+@app.route('/donga/gookhwe/', methods = ['POST','GET'])
+def mistake_2_1():
+    today0 = date.today()
+    return redirect(f'/donga/gookhwe/{today0}')
+
+@app.route('/donga/gookhwe/<date0>', methods=['get'])
+def index(date0):
     config = {
         'user': 'root',
-        'password': 'Seoseoseo7!',
+        'password': 'donga123123!',
         'host': 'localhost',
         'database': 'gookhwe_stuffs',
         'port': '3306'
@@ -24,21 +30,21 @@ def index():
     db = mysql.connector.connect(**config)
     cursor = db.cursor()
     cursor.execute(
-        """
-        select xcode, xsubj, xname, xdesc from gookhwe_stuffs.live_list
+        f"""
+        select xcode, xsubj, xname, xdesc from gookhwe_stuffs.live_list where date0="{date0}"
         """
     )
     objs = []
     for temp in cursor.fetchall():
-        objs.append({'xcode':temp[0], 'xsubj':temp[1], 'xname':temp[2], 'xdesc':temp[3]})
+        objs.append({'xcode':temp[0], 'xsubj':temp[1], 'xname':temp[2], 'xdesc':temp[3], 'date0':date0})
     return render_template('bot_v3.html', objs=objs)
 
 
-@app.route('/donga/gookhwe/<xcode0>', methods=['get'])
-def test(xcode0):
+@app.route('/donga/gookhwe/<date0>/<xcode0>', methods=['get'])
+def test(xcode0, date0):
     config = {
         'user': 'root',
-        'password': 'Seoseoseo7!',
+        'password': 'donga123123!',
         'host': 'localhost',
         'database':'gookhwe_stuffs',
         'port': '3306'
@@ -49,7 +55,7 @@ def test(xcode0):
     objs = []
     cursor.execute(
         f"""
-        select content, xname, xsubj, xdesc from gookhwe_stuffs.live_list where xcode='{xcode0}'
+        select content, xname, xsubj, xdesc from gookhwe_stuffs.live_list where xcode='{xcode0}' and date0="{date0}"
         """
         # and good = 1
     )
@@ -59,7 +65,10 @@ def test(xcode0):
     xsubj = temp[2]
     xdesc = temp[3]
     objs={'xname':xname, 'xsubj':xsubj, 'xdesc':xdesc}
-    blob_scrol = codecs.decode(a, 'utf-8')
+    if a==None:
+        blob_scrol = "개의 전"
+    else:
+        blob_scrol = codecs.decode(a, 'utf-8')
     # print(blob_scrol)
     article =blob_scrol.replace('\n','<BR>')
 
@@ -107,19 +116,19 @@ def test(xcode0):
 
 if __name__ == "__main__":
     # serve(app, host = '0.0.0.0', port = '3389', threads=1)
-    with open('C:/stamp/port.txt', 'r') as f:
-        port = f.read().split(',')[0]  # 노트북 5232, 데스크탑 5231
+    # with open('C:/stamp/port.txt', 'r') as f:
+        # port = f.read().split(',')[0]  # 노트북 5232, 데스크탑 5231
         # port = port[0]
     # print(port)
     # host = '0.0.0.0'
-    if port == '5232':
-        port ='5236'
-        host = '172.30.1.58'
-        host = '0.0.0.0'
+    # if port == '5232':
+        # port ='5236'
+        # host = '172.30.1.58'
+        # host = '0.0.0.0'
 
-    elif port == '5231':
-        port = '5236'
-        host = '0.0.0.0'
+    # elif port == '5231':
+    port = '5236'
+    host = '0.0.0.0'
     # port = 5233
     # 172.30.1.53
     # 0.0.0.0

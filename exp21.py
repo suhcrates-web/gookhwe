@@ -13,7 +13,7 @@ open0 = False
 while True:
     config = {
         'user': 'root',
-        'password': 'Seoseoseo7!',
+        'password': 'donga123123!',
         'host': 'localhost',
         'port': '3306'
     }
@@ -51,7 +51,7 @@ while True:
 
                 config = {
                     'user': 'root',
-                    'password': 'Seoseoseo7!',
+                    'password': 'donga123123!',
                     'host': 'localhost',
                     'port': '3306'
                 }
@@ -80,7 +80,7 @@ while True:
 
     config = {
         'user': 'root',
-        'password': 'Seoseoseo7!',
+        'password': 'donga123123!',
         'host': 'localhost',
         'port': '3306'
     }

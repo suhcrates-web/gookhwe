@@ -5,7 +5,7 @@ from datetime import date
 def live_list_start():
     config = {
         'user': 'root',
-        'password': 'Seoseoseo7!',
+        'password': 'donga123123!',
         'host': 'localhost',
         # 'database':'shit',
         'port': '3306'
@@ -34,7 +34,8 @@ def live_list_start():
         xsubj varchar(100),
         xthmb varchar(100),
         wss varchar(100),
-        content longblob
+        content longblob,
+        summary blob
         )
         """
     )

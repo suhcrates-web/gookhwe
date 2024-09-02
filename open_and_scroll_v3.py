@@ -19,7 +19,7 @@ def open_and_scroll(xcode, xcgcd):
         try:
             config = {
                 'user': 'root',
-                'password': 'Seoseoseo7!',
+                'password': 'donga123123!',
                 'host': 'localhost',
                 # 'database':'shit',
                 'port': '3306'
@@ -73,7 +73,7 @@ def open_and_scroll(xcode, xcgcd):
     
                                 config = {
                                             'user': 'root',
-                                            'password': 'Seoseoseo7!',
+                                            'password': 'donga123123!',
                                             'host': 'localhost',
                                             # 'database':'shit',
                                             'port': '3306'
@@ -90,7 +90,7 @@ def open_and_scroll(xcode, xcgcd):
                             ####### xstate0 다시 확인하는 부분 ####
                                 config = {
                                     'user': 'root',
-                                    'password': 'Seoseoseo7!',
+                                    'password': 'donga123123!',
                                     'host': 'localhost',
                                     'port': '3306'
                                 }
@@ -110,7 +110,7 @@ def open_and_scroll(xcode, xcgcd):
                                     a = bin(int(binascii.hexlify(blob_scrol.encode('utf-8')), 16))[2:]
                                     config = {
                                         'user': 'root',
-                                        'password': 'Seoseoseo7!',
+                                        'password': 'donga123123!',
                                         'host': 'localhost',
                                         # 'database':'shit',
                                         'port': '3306'

@@ -2,7 +2,7 @@ from database import cursor, db
 
 cursor.execute(
     f"""
-    create db if not exists gookhwe_stuffs
+    CREATE database if not exists gookhwe_stuffs;
     """
 )
 cursor.execute(
@@ -27,7 +27,8 @@ cursor.execute(
         xdesc varchar(20),
         xcgcd varchar(20),
         xsubj varchar(50),
-        content longblob
+        content longblob,
+        summary blob
         );
         """
     )

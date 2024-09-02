@@ -10,7 +10,7 @@ from ToolBox import gimme_wss
 def giveme_live_list():
     config = {
         'user': 'root',
-        'password': 'Seoseoseo7!',
+        'password': 'donga123123!',
         'host': 'localhost',
         # 'database':'shit',
         'port': '3306'
@@ -55,7 +55,7 @@ def giveme_live_list():
                 today0 = date.today()
                 cursor.execute(
                     f"""
-                    insert into gookhwe_stuffs.live_list values("{today0}","{today0.strftime('%Y%m%d')}_{xcode}","{xcode}","{xstat}","{xname}","{xdesc}","{xcgcd}","{xsubj}","{xthmb}","{wss}", NULL)
+                    insert into gookhwe_stuffs.live_list values("{today0}","{today0.strftime('%Y%m%d')}_{xcode}","{xcode}","{xstat}","{xname}","{xdesc}","{xcgcd}","{xsubj}","{xthmb}","{wss}", NULL, NULL)
                     on duplicate key update
                     xstat = "{xstat}",
                     xname = "{xname}",
