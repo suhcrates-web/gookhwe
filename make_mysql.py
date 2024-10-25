@@ -32,6 +32,17 @@ cursor.execute(
         );
         """
     )
+cursor.execute(
+    f"""
+    CREATE TABLE IF NOT EXISTS gookhwe_stuffs.summary_list (
+    live_key VARCHAR(20),
+    block_index VARCHAR(3),
+    summary blob,
+    PRIMARY KEY (live_key, block_index),
+    FOREIGN KEY (live_key) REFERENCES gookhwe_stuffs.live_list(key0)
+    );
+    """
+)
 # cursor.execute(
 #         f"""
 #         CREATE TABLE IF NOT EXISTS gookhwe_stuffs.temp_checker(

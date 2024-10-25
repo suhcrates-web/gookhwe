@@ -1,32 +1,5 @@
-{% extends 'base.html' %}
-
-{% block head %}
-<title>Donga Kit</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-<script src="{{ url_for('static', filename='js/bot_v3.js') }}"></script>
-{% endblock head %}
-
-{% block header %}
-<div class="error-black-modal">
-    <p><img src="{{ url_for('static', filename='images/error_img.png') }}" alt=""><span>사내 서비스로 대외 유출 금지<br>오류 문의</span> DX본부 전략팀 서영빈 기자</p>
-</div>
-{% endblock header %}
-
-{% block body %}
 <section class="today-menu">
-    <h2 class="today-menu-title">
-        {{ date_reform }}
-        <button class="date-dropDown-menu">
-            <img src="{{ url_for('static', filename='images/date_down_arrow.svg')}}" alt="">
-        </button>
-        <br>
-        오늘의 생중계
-    </h2>
-    <ul class="date-list">
-        <li class="date"></li>
-        <li class="date"></li>
-        <li class="date"></li>
-    </ul>
+    <h2 class="today-menu-title">{{ date_reform }}<br>오늘의 생중계</h2>
 </section>
 <button class="toggle-btn"><img src="{{ url_for('static', filename='images/toggle_btn.png')}}" alt=""></button>
 <section class="stenography-section">
@@ -53,13 +26,13 @@
             {% if objs %}
                 {% for obj in objs %}
                     {% if obj.active == "True" %}
-                        <li><a data-url="True" class="stenography-link" href="/donga/gookhwe/{{obj.date0}}/{{obj.xcode}}">속기록 확인</a></li>
+                        <li><a class="stenography-link" href="/donga/gookhwe/{{obj.date0}}/{{obj.xcode}}">속기록 확인</a></li>
                     {% else %}
-                        <li><p data-url="False" class="stenography-none">속기록 없음</p></li>
+                        <li><p class="stenography-none">속기록 없음</p></li>
                     {% endif %}
                 {% endfor %}
             {% else %}
-                <li><p data-url="False" class="stenography-none">속기록 없음</p></li>
+                <li><p class="stenography-none">속기록 없음</p></li>
             {% endif %}
         </ul>
     </article>
@@ -95,5 +68,3 @@
 {% for pagename in pagenames %}
 <a href='/bot_v3/{{pagename}}/'>{{pagename}}</a>
 {% endfor %}
-
-{% endblock body %}

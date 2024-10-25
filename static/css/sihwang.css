@@ -1,30 +1,849 @@
-.nextto {
-	float:left;
-	border:1px solid #7f7f7f; 
-	width:100px;
-	height:50px;
-	display:block;
-	vertical-align: middle;
-	line-height:50px;
-	text-align:center;
-
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+@font-face {
+    font-family: 'SpoqaHanSansNeo-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
-#make_box{
-	border:1px solid #7f7f7f; 
-	width:200px;
-	height:50px;
-	background-color:yellow ;
-	display:block;
-	/*vertical-align: middle;*/
-	text-align:center;
-	/*margin: 0;*/
-	border-radius:30%;
-	line-height:50px;
-	
-	
+.nav-bar{
+    background: #F6F6F6;
+    padding: 16px 24px;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
 }
 
-.dangbun {
-	background-color:skyblue;
+.stenography{
+    color: #F2F9F9;
+    text-align: center;
+    font-family: "SpoqaHanSansNeo-Regular";
+    font-size: 18px;
+    line-height: 150%;
+    border-radius: 16px;
+    background: var(--color-primary-cyan);
+    padding: 12px 40px;
+}
+
+.news-search{
+    color: var(--color-primary-cyan);
+    text-align: center;
+    font-family: "SpoqaHanSansNeo-Regular";
+    font-size: 18px;
+    line-height: 150%;
+    border-radius: 16px;
+    background: var(--color-neutral-white-100);
+    padding: 12px 40px;
+    border: 1px solid var(--color-primary-cyan);
+    cursor: default;
+    position: relative;
+}
+
+.news-search::after{
+    position: absolute;
+    display: block;
+    content: "COMING SOON";
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    background-color: #ffffffce;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-qa{
+    position: absolute;
+    right: 24px;
+    display: flex;
+    color: #707775;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: -0.2px;
+    gap: 7px;
+}
+
+.error-qa p span{
+    font-weight: 500;
+    line-height: 130%;
+}
+
+.nav-icon{
+    display: none;
+}
+
+main{
+    display: flex;
+    height: calc(100% - 85px);
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
+}
+
+.today-menu{
+    border-right: 2px solid #F6F6F6;
+    padding: 30px 24px 40px;
+    position: relative;
+    width: 20%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    overflow: hidden;
+    transition: 1s;
+    display: flex;
+    flex-direction: column;
+}
+
+.today-menu.close{
+    width: 0%;
+    padding: 30px 0 40px 50px;
+}
+
+.today-menu-title{
+    color: var(--color-primary-cyan);
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 150%;
+    text-wrap: nowrap;
+	margin-bottom: 13px;
+}
+
+.back-to-home{
+	border-radius: 12px;
+	background: #F6F6F6;
+	color: #707775;
+	font-family: "Noto Sans KR", sans-serif;
+	font-size: 14px;
+	line-height: 150%;
+	padding: 6px 16px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+    margin-left: auto;
+    width: fit-content;
+}
+
+.menu-caution-wrap{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.today-stenography-menu{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	gap: 16px;
+	margin-top: 22px;
+    padding-bottom: 12px;
+    height: 60%;
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none; 
+}
+
+.today-stenography-menu::-webkit-scrollbar{
+    display: none;
+}
+
+.today-stenography-info-wrap{
+	border-radius: 16px;
+	background: #F6F6F6;
+	padding: 15px;
+    cursor: pointer;
+    transition: .5s;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    width: 100%;
+    position: relative;
+}
+
+.today-stenography-info-wrap:hover{
+    border: 1px solid var(--color-primary-cyan);
+    background: #F2F9F9;
+}
+
+.active-false{
+    cursor: default;
+}
+
+.active-false:hover{
+    border: 1px solid transparent;
+    background: #F6F6F6;
+}
+
+.stenography-x{
+    position: absolute;
+    color: #707775;
+    text-align: center;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 10px;
+    line-height: 130%;
+    letter-spacing: -0.2px;
+    padding: 4px 10px;
+    border-radius: 40px;
+    background: var(--color-neutral-white-100);
+    top: 9px;
+    right: 13px;
+}
+
+.today-stenography-info-wrap:hover p{
+    color: var(--color-primary-cyan);
+}
+
+.active-false:hover p{
+    color: #272727;
+}
+
+.today-stenography-info-wrap.now-stenography{
+    border: 1px solid var(--color-primary-cyan);
+    background: #F2F9F9;
+    cursor: default;
+}
+
+.today-stenography-info-wrap p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+	color: #272727;
+	font-family: "Noto Sans KR", sans-serif;
+	font-size: 14px;
+	line-height: 150%;
+	letter-spacing: -0.2px;
+}
+
+.now-stenography p{
+    color: var(--color-primary-cyan);
+}
+
+.today-stenography-info-wrap p:nth-child(1){
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.today-stenography-info-wrap a p:nth-child(1){
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.ai-caution{
+    padding: 12px 35px 12px 41px;
+    border-radius: 20px;
+    background: #F6F6F6;
+    color: #707775;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: -0.2px;
+    position: relative;
+    height: 80px;
+    overflow: hidden;
+}
+
+.ai-caution img{
+    position: absolute;
+    left: 14px;
+    top: 13px;
+}
+
+.ai-caution span{
+    font-weight: 500;
+}
+
+.toggle-btn{
+    position: absolute;
+    left: 20%;
+    transform: translateX(-50%);
+    bottom: 20%;
+    width: 34px;
+    height: 34px;
+    transition: 0.9s;
+    z-index: 10;
+}
+
+.toggle-btn img{
+    width: 100%;
+}
+
+.toggle-btn.close{
+    left: 50px;
+    transform: rotate(180deg) translateX(50%);
+}
+
+.stenography-content{
+    padding: 33px 24px 3%;
+    flex-shrink: 1;
+    width: 100%;
+    box-sizing: border-box;
+    border-right: 2px solid #F6F6F6;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.stenography-content-info{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #262626;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 130%;
+    margin-bottom: 25px;
+    gap: 40px;
+}
+
+.stenography-title{
+    color: #262626;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 22px;
+    line-height: 130%;
+    margin-bottom: 25px;
+}
+
+.stenography-content-info .stenography-state{
+    border-radius: 12px;
+    background: #EDAB15;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 150%;
+    letter-spacing: -0.6px;
+    padding: 2px 20px;
+    text-wrap: nowrap;
+}
+
+.stenography-content-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #262626;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 150%;
+    margin-bottom: 25px;
+}
+
+.timer{
+    color: #707775;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+}
+
+.spare-time{
+    margin-right: 11px;
+    font-weight: 600;
+}
+
+.stenography-content-header li:nth-child(3){
+    display: none;
+}
+
+.button.copy{
+    border-radius: 12px;
+    border: 1px solid var(--color-primary-cyan);
+    background: #F2F9F9;
+    color: var(--color-primary-cyan);
+    font-family: "SpoqaHanSansNeo-Regular";
+    font-size: 18px;
+    font-weight: 400;
+    padding: 5px 20px;
+}
+
+.button.copy img{
+    margin-right: 10px;
+}
+
+#content_box{
+    height: 100%;
+    overflow: auto;
+    color: #262626;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 170%;
+    letter-spacing: -0.2px;
+}
+
+#content_box::-webkit-scrollbar{
+    width: 8px;
+}
+
+#content_box::-webkit-scrollbar-thumb{
+    background: #E7E7E7;
+    border-radius: 100px;
+}
+
+#content_box::-webkit-scrollbar-track{
+    background: transparent;
+}
+
+.article-content{
+    padding: 14px 10px 14px 21px;
+}
+
+.article-content:last-child{
+    padding-bottom: 0;
+}
+
+.article-content span{
+    margin-bottom: 9px;
+    border-radius: 10px;
+    background: #F2F9F9;
+    color: var(--color-primary-cyan);
+    font-weight: 500;
+    line-height: 150%;
+    width: fit-content;
+    padding: 2px 11px;
+    position: relative;
+    right: 11px;
+}
+
+.stenography-summary{
+    padding: 86px 24px 3%;
+    position: relative;
+    flex-shrink: 0;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.stenography-summary-header{
+    color: #262626;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 16px;
+    line-height: 170%;
+    letter-spacing: -0.2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    gap: 16px;
+}
+
+.stenography-summary-header li:nth-child(1){
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 150%;
+}
+
+#summary_box{
+    height: 100%;
+    overflow: auto;
+    padding-right: 10px;
+}
+
+#summary_box::-webkit-scrollbar{
+    width: 8px;
+}
+
+#summary_box::-webkit-scrollbar-thumb{
+    background: #E7E7E7;
+    border-radius: 100px;
+}
+
+#summary_box::-webkit-scrollbar-track{
+    background: transparent;
+}
+
+.summary-content{
+    width: 100%;
+    border-radius: 10px;
+    background: #F6F6F6;
+    padding: 16px;
+    margin-bottom: 16px;
+    color: #262626;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 16px;
+    line-height: 170%;
+    letter-spacing: -0.2px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.summary-content:last-child{
+    margin-bottom: 0;
+}
+
+.summary-content span{
+    cursor: pointer;
+    color: var(--Primary-green, #008689);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 130%;
+    display: block;
+    margin-bottom: 13.5px;
+}
+
+.summary-button{
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    height: 9px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.summary-button img{
+    transition: .5s;
+}
+
+.close .summary-button img{
+    transform: rotate(180deg);
+}
+
+.for-accordian{
+    display: grid;
+    transition: .5s;
+    grid-template-rows: 1fr;
+}
+
+.for-accordian p{
+    overflow: hidden;
+}
+
+.close .for-accordian{
+    grid-template-rows: 0fr;
+}
+
+@media screen and (max-width: 1280px){
+    .today-menu-title{
+        font-size: 25px;
+    }
+
+    .stenography-summary-header li:nth-child(1){
+        font-size: 16px;
+    }
+
+    .stenography-content-info{
+        font-size: 16px;
+        gap: 16px;
+    }
+
+    .stenography-title{
+        font-size: 16px;
+    }
+
+    .stenography-content-info li:nth-child(2){
+        padding: 4px 16px;
+    }
+
+    .stenography-content-header{
+        font-size: 16px;
+    }
+
+    .button.copy{
+        font-size: 12px;
+        padding: 4px 16px;
+    }
+
+    .button.copy img{
+        height: 18px;
+    }
+}
+
+@media screen and (max-width: 1024px){
+    .today-menu{
+        width: 0;
+        padding: 76px 0 24px;
+        position: absolute;
+        height: 100vh;
+        z-index: 30;
+        right: 0;
+        top: -85px;
+        border-radius: 20px 0px 0px 20px;
+        background: #FFF;
+    }
+
+    .back-to-home{
+        margin-right: auto;
+        margin-left: 0;
+    }
+    
+    .today-menu.on{
+        padding: 76px 24px 24px;
+        width: 320px;
+    }
+    
+    .today-menu-title{
+        font-size: 40px;
+    }
+
+    .toggle-btn{
+        display: none;
+    }
+
+    .error-qa{
+        display: none;
+    }
+
+    .nav-icon{
+        display: block;
+        position: absolute;
+        right: 24px;
+        top: 22px;
+        z-index: 40;
+    }
+
+    .black-modal{
+        width: 100vw;
+        position: absolute;
+        height: 100vh;
+        z-index: 20;
+        background: rgba(38, 38, 38, 0.60);
+        right: 0;
+        top: -85px;
+        display: none;
+    }
+
+    .black-modal.on{
+        display: block;
+    }
+
+    main{
+        flex-direction: column;
+    }
+
+    .stenography-content{
+        width: auto;
+        z-index: 10;
+        height: 100%;
+    }
+
+    .stenography-title{
+        margin-bottom: 80px;
+    }
+
+    .timer{
+        position: absolute;
+        top: 140px;
+        right: 24px;
+    }
+
+    .article-content{
+        padding: 14px 0;
+    }
+
+    .button.copy{
+        position: absolute;
+        top: 134px;
+        left: 24px;
+        display: none;
+    }
+
+    .button.copy.on{
+        display: block;
+    }
+
+    #content_box{
+        opacity: 0;
+    }
+    
+    #content_box.on{
+        opacity: 1;
+    }
+
+    .stenography-content-header li{
+        cursor: pointer;
+    }
+
+    .stenography-content-header li:nth-child(1){
+        border-radius: 14px;
+        background: var(--color-neutral-white-100);
+        border: 1px solid var(--color-primary-cyan);
+        color: var(--color-primary-cyan);
+        text-align: center;
+        font-family: "SpoqaHanSansNeo-Regular";
+        font-size: 18px;
+        font-weight: 400;
+        padding: 12px 40px;
+        box-sizing: border-box;
+    }
+    
+    .stenography-content-header li:nth-child(1).on{
+        border: none;
+        background: var(--color-primary-cyan);
+        color: #F2F9F9;
+    }
+    
+    .stenography-content-header li:nth-child(3){
+        border-radius: 14px;
+        background: var(--color-neutral-white-100);
+        border: 1px solid var(--color-primary-cyan);
+        color: var(--color-primary-cyan);
+        text-align: center;
+        font-family: "SpoqaHanSansNeo-Regular";
+        font-size: 18px;
+        font-weight: 400;
+        padding: 12px 40px;
+        box-sizing: border-box;
+        display: block;
+    }
+
+    .stenography-content-header li:nth-child(3).on{
+        border: none;
+        background: var(--color-primary-cyan);
+        color: #F2F9F9;
+    }
+    
+    .today-stenography-info-wrap p:nth-child(1){
+        margin-bottom: 0;
+    }
+
+    .stenography-x{
+        display: none;
+    }
+
+    .stenography-summary{
+        position: absolute;
+        opacity: 0;
+        z-index: 0;
+        height: calc(100% - 265px);
+        box-sizing: border-box;
+        bottom: 0;
+        padding-top: 0;
+        width: 100%;
+    }
+
+    .stenography-summary.on{
+        opacity: 1;
+        z-index: 20;
+    }
+
+    .active-false{
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        align-items: flex-start;
+    }
+    
+    .today-stenography-info-wrap.active-false p{
+        color: #E7E7E7;
+    }
+
+    .stenography-summary-header{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 640px){
+    .timer{
+        font-size: 12px;
+    }
+
+    .spare-time{
+        margin-right: 6px;
+    }
+
+    .stenography-content-header{
+        gap: 11px;
+    }
+    
+    .stenography-content-header li:nth-child(1){
+        width: 100%;
+        padding: 12px 0;
+        flex-shrink: 1;
+    }
+    
+    .stenography-content-header li:nth-child(3){
+        width: 100%;
+        padding: 12px 0;
+        flex-shrink: 1;
+    }
+
+    .article-content{
+        padding: 12px 15px;
+        border-radius: 20px;
+        background: #F6F6F6;
+        margin-bottom: 16px;
+    }
+
+    .article-content:last-child{
+        margin-bottom: 0;
+    }
+}
+
+@media screen and (max-width: 480px){
+    .today-menu{
+        padding: 76px 0 16px;
+        top: -75px;
+        border-radius: 20px 0px 0px 20px;
+        background: #FFF;
+    }
+    
+    .nav-icon{
+        right: 16px;
+        top: 16px;
+    }
+
+    .today-menu.on{
+        padding: 76px 16px 16px;
+    }
+
+    .black-modal{
+        top: -75px;
+    }
+
+    .nav-bar{
+        padding: 16px;
+    }
+
+    .stenography{
+        font-size: 14px;
+        padding: 10px 30px;
+    }
+    
+    .news-search{
+        font-size: 14px;
+        padding: 10px 30px;
+    }
+
+    .stenography-content{
+        padding: 33px 16px 3%;
+    }
+
+    .stenography-content-info{
+        margin-bottom: 10px;
+    }
+
+    .timer{
+        top: 125px;
+        right: 16px;
+    }
+
+    .timer span{
+        display: none;
+    }
+
+    .timer .spare-time{
+        display: inline;
+        margin-right: 0;
+    }
+
+    .button.copy{
+        top: 119px;
+        left: 16px;
+        padding: 4px 12px;
+    }
+
+    .stenography-content-header{
+        margin-bottom: 12px;
+    }
+
+    .stenography-summary{
+        padding: 0 16px 3%;
+    }
 }

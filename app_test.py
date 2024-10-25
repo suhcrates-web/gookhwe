@@ -19,36 +19,27 @@ def mistake_2_1():
     today0 = date.today()
     return redirect(f'/donga/gookhwe/{today0}')
 
-
 @app.route('/donga/gookhwe/<date0>', methods=['get'])
 def index(date0):
-    # date0에 대한 오류 처리
-    input_date = datetime.strptime(date0, '%Y-%m-%d').date()
-    today0 = date.today()
-    four_days_ago = today0 - timedelta(days=4)
-    if input_date <= four_days_ago or input_date > today0:
-        return redirect(f'/donga/gookhwe/{today0}')
+    config = {
+        'user': 'root',
+        'password': 'donga123123!',
+        'host': 'localhost',
+        'database': 'gookhwe_stuffs',
+        'port': '3306'
+    }
 
-    date_split = date0.split('-')
-    date_reform = str(date_split[1]) + '월 ' + str(date_split[2]) + '일'
     db = mysql.connector.connect(**config)
     cursor = db.cursor()
-    objs = []
     cursor.execute(
         f"""
-        select xcode, xsubj, xname, xdesc, xstat, content from gookhwe_stuffs.live_list where date0="{date0}"
+        select xcode, xsubj, xname, xdesc from gookhwe_stuffs.live_list where date0="{date0}"
         """
     )
+    objs = []
     for temp in cursor.fetchall():
-        if temp[5] != None:
-            activate = "True"
-        else:
-            activate = "False"
-
-        objs.append({'xcode':temp[0], 'xsubj':temp[1], 'xname':temp[2], 'xdesc':temp[3], 'date0':date0, 'active':activate})
+        objs.append({'xcode':temp[0], 'xsubj':temp[1], 'xname':temp[2], 'xdesc':temp[3], 'date0':date0})
     return render_template('bot_v3.html', objs=objs)
-
-
 
 @app.route('/donga/gookhwe/<date0>/<xcode0>', methods=['get'])
 def test(xcode0, date0):
@@ -167,6 +158,6 @@ def article_request(xcode0, date0):
     return jsonify(response)
 
 if __name__ == "__main__":
-    port = '5236'
+    port = '5234'
     host = '0.0.0.0'
     app.run(host=host, port=port, debug=True)

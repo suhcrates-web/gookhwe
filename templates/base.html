@@ -1,21 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--
-    <link rel="stylesheet" href="../static/css/main.css">이렇게도 됨.
-    -->
- 
-    {% block head %}
-
-
-    {% endblock head %}
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    {% block head %}{% endblock head %}
+</head>
 <body>
-    <h1>국회 받아치기</h1>
-    {% block body %} {% endblock body %}
+    <header>
+        <ul class="nav-bar">
+            <li class="stenography">
+                <a href="/donga/gookhwe/{{date0}}">국회속기록</a>
+            </li>
+            <li class="news-search" title="뉴스 검색 기능은 현재 준비 중입니다.">뉴스검색</li>
+            <li class="error-qa">
+                <img src="{{ url_for('static', filename='images/error_img.png') }}" alt="">
+                <p><span>사내 서비스로 대외 유출 금지<br>오류 문의</span> DX본부 전략팀 서영빈 기자</p>
+            </li>
+        </ul>
+        {% block header %}
+        {% endblock header %}
+    </header>
+    <main>
+        {% block body %}
+        {% endblock body %}
+    </main>
 </body>
+<script>
+    // // 모든 a 링크에 대한 이벤트 리스너 추가
+    // document.querySelectorAll('a').forEach(link => {
+    //     link.addEventListener('click', function(e) {
+    //         e.preventDefault();  // 기본 a 태그 동작 막기
+    //         loadPage(this.href);  // href 속성으로 페이지 로드
+    //     });
+    // });
 
+    // AJAX로 페이지를 로드하는 함수
+    function loadPage(url) {
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })  // AJAX 요청임을 명시
+            .then(response => response.json())  // JSON 데이터로 응답을 받음
+            .then(data => {
+                console.log(data);
+                document.innerHTML = data;
+            })
+            .catch(error => console.error('Error loading page:', error));
+    }
+</script>
 </html>

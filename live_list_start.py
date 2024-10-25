@@ -35,7 +35,8 @@ def live_list_start():
         xthmb varchar(100),
         wss varchar(100),
         content longblob,
-        summary blob
+        summary blob,
+        chair json,
         )
         """
     )

@@ -19,35 +19,34 @@ def mistake_2_1():
     today0 = date.today()
     return redirect(f'/donga/gookhwe/{today0}')
 
-
 @app.route('/donga/gookhwe/<date0>', methods=['get'])
 def index(date0):
-    # date0에 대한 오류 처리
+    # 4일 전부터는 DB에 데이터가 없으므로 오늘로 redirect
     input_date = datetime.strptime(date0, '%Y-%m-%d').date()
     today0 = date.today()
     four_days_ago = today0 - timedelta(days=4)
     if input_date <= four_days_ago or input_date > today0:
         return redirect(f'/donga/gookhwe/{today0}')
-
-    date_split = date0.split('-')
-    date_reform = str(date_split[1]) + '월 ' + str(date_split[2]) + '일'
+    
+    # DB에 날짜가 있는 경우
     db = mysql.connector.connect(**config)
     cursor = db.cursor()
-    objs = []
     cursor.execute(
         f"""
-        select xcode, xsubj, xname, xdesc, xstat, content from gookhwe_stuffs.live_list where date0="{date0}"
+        select xcode, xsubj, xname, xdesc, content
+        from gookhwe_stuffs.live_list
+        where date0="{date0}"
         """
     )
+    date_split = date0.split('-')
+    date_reform = str(date_split[1]) + '월 ' + str(date_split[2]) + '일'
+    objs = []
     for temp in cursor.fetchall():
-        if temp[5] != None:
-            activate = "True"
-        else:
-            activate = "False"
-
-        objs.append({'xcode':temp[0], 'xsubj':temp[1], 'xname':temp[2], 'xdesc':temp[3], 'date0':date0, 'active':activate})
-    return render_template('bot_v3.html', objs=objs)
-
+        content = temp[4]
+        active = "True" if content else "False"
+        cleaned_xsubj = re.sub(r'\[\d{1,2}:\d{2}\]', '', temp[1]).strip() # xsubj에서 시간 형식을 제거
+        objs.append({'xcode':temp[0], 'xsubj':cleaned_xsubj, 'xname':temp[2], 'xdesc':temp[3], 'date0':date0, 'active':active})
+    return render_template('bot_v3.html', objs=objs, date_reform=date_reform)
 
 
 @app.route('/donga/gookhwe/<date0>/<xcode0>', methods=['get'])
@@ -98,12 +97,7 @@ def test(xcode0, date0):
         blob_scrol = codecs.decode(a, 'utf-8')
     article =blob_scrol.replace('\n','<BR>')
     key0=date0.replace('-', '') + '_' + xcode0
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        # AJAX 요청일 경우 본문과 추가 헤더를 JSON으로 반환
-        html_content = render_template('sihwang.html', article= article, objs=objs, live_key=key0, objs_list=objs_list, date0=date0, date_reform=date_reform)
-        return jsonify({'html': html_content})
-    else:
-        return render_template('sihwang.html', article= article, objs=objs, live_key=key0, objs_list=objs_list, date0=date0, date_reform=date_reform)
+    return render_template('sihwang.html', article= article, objs=objs, live_key=key0, objs_list=objs_list, date0=date0, date_reform=date_reform)
 
 # 당일 리스트 조회 및 업데이트를 위한 API
 @app.route('/donga/gookhwe/<date0>/list', methods=['GET'])
@@ -167,6 +161,6 @@ def article_request(xcode0, date0):
     return jsonify(response)
 
 if __name__ == "__main__":
-    port = '5236'
+    port = '443'
     host = '0.0.0.0'
-    app.run(host=host, port=port, debug=True)
+    app.run(host=host, port=port, ssl_context='adhoc', debug=True)

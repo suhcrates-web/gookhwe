@@ -1,49 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'base.html' %}
 
-    <meta charset="UTF-8">
+{% block head %}
+<title>국회 받아치기</title>
+<script type="text/javascript">
+    const live_key = '{{ live_key }}';
+</script>
+<script src="{{ url_for('static', filename='js/sihwang.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sihwang.css') }}">
+{% endblock head %}
 
-    <title>국회 받아치기</title>
-    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-    crossorigin="anonymous"></script>
-    <script type = "text/javascript">
-        var brod = '{{ brod }}';
+{% block header %}
+<button class="nav-icon"><img src="{{ url_for('static', filename='images/nav_icon.svg') }}" alt=""></button>
+{% endblock header %}
 
-    </script>
-    <script src="{{ url_for('static', filename='js/sihwang.js') }}"></script>
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/sihwang.css') }}"></script>
-    <!-- <script>
-    	$(document).ready(function(){
-    		$('#{{id_0}}').addClass('dangbun')
+{% block body %}
+<section class="today-menu">
+    <h2 class="today-menu-title">{{ date_reform }}<br>오늘의 생중계</h2>
+    <a class="back-to-home" href="/donga/gookhwe/{{date0}}">전체보기<img src="{{ url_for('static', filename='images/right_arrow.png') }}" alt=""></a>
+    <article class="menu-caution-wrap">
+        <ul class="today-stenography-menu">
+            {% for obj in objs_list %}
+            {% if obj.xname == objs.xname %}
+            <li class="today-stenography-info-wrap now-stenography">
+                <p>{{obj.xname}}</p>
+                <p>{{obj.xsubj}}</p>
+            </li>
+            {% elif obj.active == "True" %}
+            <li class="today-stenography-info-wrap">
+                <a href="/donga/gookhwe/{{date0}}/{{obj.xcode}}">
+                    <p>{{obj.xname}}</p>
+                    <p>{{obj.xsubj}}</p>
+                </a>
+            </li>
+            {% else %}
+            <li class="today-stenography-info-wrap active-false">
+                <p>{{obj.xname}}</p>
+                <p>{{obj.xsubj}}</p>
+                <span class="stenography-x">속기록 없음</span>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        <p class="ai-caution"><img src="{{ url_for('static', filename='images/caution_icon.svg') }}" alt=""><span>AI는 실수를 할 수 있습니다.</span><br>(속기록의 경우 인명 및 고유명사 등) 정확한 정보는 확인이 필요합니다.</p>
+    </article>
+</section>
+<button class="toggle-btn"><img src="{{ url_for('static', filename='images/toggle_btn.png')}}" alt=""></button>
+<section class="stenography-content">
+    <ul class="stenography-content-info">
+        <li>{{objs.xname}}</li>
+        <li class="stenography-state">{{objs.xdesc}}</li>
+        <li class="timer"><span class="spare-time">30초</span> 뒤에 내용<span>이</span> 자동<span>으로</span> 새로고침<span>됩니다.</span></li>
+    </ul>
+    <p class="stenography-title">{{objs.xsubj}}</p>
+    <ul class="stenography-content-header">
+        <li class="on">속기록 내용</li>
+        <li>
+            <button class="button copy on"><img src="{{ url_for('static', filename='images/copy_icon.svg')}}" alt="">클립보드에 복사하기</button>
+        </li>
+        <li>AI 요약</li>
+    </ul>
+    <div id='content_box' class="on"></div>
+</section>
+<section class="stenography-summary">
+    <ul class="stenography-summary-header">
+        <li>AI 요약</li>
+        <li>5000자마다 AI가 요약한 내용을 제공합니다.</li>
+    </ul>
+    <article id="summary_box">
+        <ul id="summary-list"></ul>
+    </article>
+</section>
+<div class="black-modal"></div>
 
-    	})
+<!-- {% for pagename in pagenames %}
+<a href='/bot_v3/{{pagename}}/'>{{pagename}}</a>
+{% endfor %} -->
 
-    </script> -->
-</head>
-<body>
-<h3>{{objs.xname}}</h3>
-
-
-
-<!--<h5>출발·마감 속보 자동송고, 공시 AI 뉴스봇, 빅데이터분석 관련 개발 문의 //kakao: suhcrates1</h5>-->
-<h5>{{objs.xsubj}}  // 상태 : {{objs.xdesc}}</h5>
-<h5><a href="http://13.124.48.9:5236/donga/gookhwe">홈으로 돌아가기</a></h5>
-
-<!-- <h3>   ++ {{brod}} 방송 보고 작성++</h3> -->
-
-<!-- <div id="make_box" state="{{state}}">작성버튼</div> -->
-
-<button class ="copy"> 클립보드에 복사 </button>
-<!-- <div><p>최신 작성 일시::   <span id='now'>{{now}}</span></p><pr>
-<p>※ 오늘자 뉴스 끝났는지 확인하세요~ </p></div><br> -->
-
-<div id='content_box' style="width:600px; height:600px; overflow-y:auto; border:1px solid black">{{article | safe}}</div>  <!--이렇게 해야 html 그대로 노출됨.-->
-<button class ="copy"> 클립보드에 복사 </button>
-<br>
-<p>※문제가 있으면 알려주세요 </p>
-
-<h5>문의 : DX본부 (담당자: 서영빈, 남기동)</h5>
-</body>
-</html>
+{% endblock body %}
