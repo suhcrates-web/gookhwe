@@ -41,21 +41,6 @@
     position: relative;
 }
 
-.news-search::after{
-    position: absolute;
-    display: block;
-    content: "COMING SOON";
-    width: 100%;
-    height: 100%;
-    border-radius: 16px;
-    background-color: #ffffffce;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .error-qa{
     position: absolute;
     right: 24px;
@@ -218,7 +203,9 @@ main{
 	font-family: "Noto Sans KR", sans-serif;
 	font-size: 14px;
 	line-height: 150%;
+    width: 100%;
 	letter-spacing: -0.2px;
+    
 }
 
 .now-stenography p{
@@ -245,8 +232,8 @@ main{
     line-height: 150%;
     letter-spacing: -0.2px;
     position: relative;
-    height: 80px;
     overflow: hidden;
+    max-height: 160px;
 }
 
 .ai-caution img{
@@ -399,7 +386,6 @@ main{
 }
 
 .article-content span{
-    margin-bottom: 9px;
     border-radius: 10px;
     background: #F2F9F9;
     color: var(--color-primary-cyan);
@@ -408,7 +394,8 @@ main{
     width: fit-content;
     padding: 2px 11px;
     position: relative;
-    right: 11px;
+    margin-right: 11px;
+    display: inline-block;
 }
 
 .stenography-summary{

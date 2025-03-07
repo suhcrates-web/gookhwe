@@ -42,11 +42,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const dateReform = document.querySelector(".today-menu-title").innerText.split('\n')[0].trim();
 
-    if (dateReform !== formattedDate) {
+    const currentMonth = month;
+    const pageMonth = parseInt(dateReform.match(/(\d+)월/)[1]);
+    const pageDay = parseInt(dateReform.match(/(\d+)일/)[1]);
+    // 월과 일을 모두 비교
+    if (currentMonth !== pageMonth || day !== pageDay) {
         const menuTitleElement = document.querySelector(".today-menu-title");
-        menuTitleElement.childNodes[0] = dateReform;
-        menuTitleElement.childNodes[4].textContent = "지나간 생중계";
+        if (menuTitleElement.childNodes[0] && menuTitleElement.childNodes[4]) {
+            menuTitleElement.childNodes[0].textContent = dateReform;
+            menuTitleElement.childNodes[4].textContent = "지나간 생중계";
+        }
     }
+    // if (dateReform !== formattedDate) {
+    //     const menuTitleElement = document.querySelector(".today-menu-title");
+    //     menuTitleElement.childNodes[0] = dateReform;
+    //     menuTitleElement.childNodes[4].textContent = "지나간 생중계";
+    // }
     
     setTimeout(() => {
         error_black_modal.style.opacity = 0;

@@ -11,10 +11,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const dateReform = document.querySelector(".today-menu-title").innerText.split('\n')[0].trim();
 
-    if (dateReform !== formattedDate) {
+    const currentMonth = month;
+    const pageMonth = parseInt(dateReform.match(/(\d+)월/)[1]);
+    const pageDay = parseInt(dateReform.match(/(\d+)일/)[1]);
+    if (currentMonth !== pageMonth || day !== pageDay) {
         const menuTitleElement = document.querySelector(".today-menu-title");
         menuTitleElement.innerHTML = `${dateReform}<br>지나간 생중계`;
     }
+    // if (dateReform !== formattedDate) {
+    //     const menuTitleElement = document.querySelector(".today-menu-title");
+    //     menuTitleElement.innerHTML = `${dateReform}<br>지나간 생중계`;
+    // }
 
     const articles = {};
     const summaries = {};
